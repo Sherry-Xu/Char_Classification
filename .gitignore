@@ -1,0 +1,12 @@
+# problem set files
+KaggleCompetition.pdf
+/MNIST_data
+
+# pycharm IDE
+.idea/
+
+# pyc file
+*.pyc
+
+# test file
+test.py
