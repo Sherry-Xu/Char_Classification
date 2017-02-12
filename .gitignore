@@ -1,6 +1,6 @@
 # problem set files
 KaggleCompetition.pdf
-/MNIST_data
+data/MNIST_data
 
 # pycharm IDE
 .idea/
@@ -10,3 +10,5 @@ KaggleCompetition.pdf
 
 # test file
 test.py
+
+

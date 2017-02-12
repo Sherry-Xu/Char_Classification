@@ -37,3 +37,10 @@ def logTransform(matrix):
 def binarization(matrix):
     matrix[matrix!=0.0] = 1
     return matrix
+
+def toFullIndices(matrix, lenght):
+    fullMatrix = np.zeros(shape=(matrix.shape[0], lenght))
+    for row in xrange(matrix.shape[0]):
+        fullMatrix[row][matrix[row]] = 1
+    return fullMatrix
+
