@@ -26,8 +26,8 @@ print clf.best_score_
 print clf.best_params_
 
 '''
-0.626855859311
-0.605177372963
-0.604119870706
-{'penalty': 'l2', 'multi_class': 'ovr', 'C': 1, 'solver': 'sag'}
+0.868191634008
+0.763461868038
+0.740062385028
+{'n_neighbors': 3, 'algorithm': 'auto'}
 '''

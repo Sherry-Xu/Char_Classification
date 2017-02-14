@@ -13,7 +13,8 @@ def main(_):
     trainY, testY = toFullIndices(trainY, 26), toFullIndices(testY, 26)
     #print trainX.shape, trainY.shape (15645, 128) (15645,)
 
-    imageSize, hiddenSize, outputSize = 128, 20, 26
+    imageSize, hiddenSize, outputSize = 128, 50, 26
+    batchSize = 100
 
     # Create the model
     x = tf.placeholder(tf.float32, [None, imageSize])
@@ -44,23 +45,29 @@ def main(_):
     sess = tf.InteractiveSession()
     # Train
     tf.initialize_all_variables().run()
-    for step in range(50000):
-        randomIndex = np.random.random_integers(0, trainX.shape[0]-1, size=(100, )) # mini batch size 100
-        batch_xs, batch_ys = trainX[randomIndex], trainY[randomIndex]
-        sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+    try:
+        for step in range(20000):
+            randomIndex = np.random.random_integers(0, trainX.shape[0]-1, size=(batchSize, )) # mini batch size 100
+            batch_xs, batch_ys = trainX[randomIndex], trainY[randomIndex]
+            sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
 
-        if step % 100 == 0:
-        # Test trained model
-            correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-            accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-            print(sess.run(accuracy, feed_dict={x: testX, y_: testY}))
+            if step % 100 == 0:
+            # Test trained model
+                correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+                accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+                print("epoc: %3d\tstep: %8d\ttraining accuracy: %.6f" % (int(step * batchSize / trainX.shape[0]),
+                    step, sess.run(accuracy, feed_dict={x: testX, y_: testY})))
+    except:
+        pass
 
+    print("training accuracy: %.6f" % (sess.run(accuracy, feed_dict={x: trainX, y_: trainY})))
+    print("testing accuracy: %.6f" % (sess.run(accuracy, feed_dict={x: testX, y_: testY})))
 
 if __name__ == '__main__':
   tf.app.run()
 
 
 '''
-0.6186
-0.61892
+training accuracy: 0.861937
+testing accuracy: 0.787811
 '''

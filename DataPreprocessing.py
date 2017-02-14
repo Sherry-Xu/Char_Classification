@@ -14,11 +14,8 @@ import scipy.io as sio
 
 # load the training & testing data
 def loadData(trainPerc=0.7):
-    samples1 = np.loadtxt('data/train.csv', dtype='int32', delimiter=',', skiprows=1,
+    samples = np.loadtxt('data/train.csv', dtype='int32', delimiter=',', skiprows=1,
                           converters={1: lambda char: ord(char) - ord('a')})
-    samples2 = np.loadtxt('data/test.csv', dtype='int32', delimiter=',', skiprows=1,
-                          converters={1: lambda char: ord(char) - ord('a')})
-    samples = np.vstack((samples1, samples2))
     testIndex = np.arange(0, samples.shape[0] - 1)
     np.random.shuffle(testIndex)
     trainNum = int(trainPerc * samples.shape[0])  # 70 percent train number

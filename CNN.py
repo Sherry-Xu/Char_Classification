@@ -83,7 +83,7 @@ try:
     correct_prediction = tf.equal(tf.arg_max(y_conv, 1), tf.arg_max(y_, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     sess.run(tf.initialize_all_variables())
-    for step in xrange(50000):   #5000
+    for step in xrange(80000):   #5000
         randomIndex = np.random.random_integers(0, trainX.shape[0] - 1, size=(batchSize,))  # mini batch size 100
         batch_xs, batch_ys = trainX[randomIndex], trainY[randomIndex]
         if step % 100 == 0:
@@ -100,12 +100,10 @@ print("test accuracy %.5f" %(accuracy.eval(feed_dict={x: testX, y_: testY, keep_
 
 
 '''
-train accuracy 0.71942
-test accuracy 0.70796
+train accuracy 0.91806
+test accuracy 0.89670
 
 batchSize = 200
 imageSize, outputSize, imageShape = 128, 26, [16, 8]
 convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 6, 16, 128, 84
-train accuracy 0.80190
-test accuracy 0.71390
 '''
