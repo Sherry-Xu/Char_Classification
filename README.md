@@ -15,10 +15,15 @@ The training and test data for the competition can be accessed from the data fil
 
 ##Grading
 A: accuracy >= 90%
+
 B: 80% <= accuracy < 90%
+
 C: 70% <= accuracy < 80%
+
 D: 60% <= accuracy < 70%
+
 E: 50% <= accuracy < 60%
+
 F: accuracy < 50%
 
 
@@ -32,5 +37,7 @@ F: accuracy < 50%
 |SVM	|0.84206|	0.82684|
 |NN|	0.86468|	0.81389|
 |CNN	|0.98351	|0.92897|
+
+<br>
 
 ![Performance Comparison](img/perfComp.png)
