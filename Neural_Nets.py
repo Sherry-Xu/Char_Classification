@@ -13,14 +13,14 @@ def main(_):
     trainY, testY = toFullIndices(trainY, 26), toFullIndices(testY, 26)
     #print trainX.shape, trainY.shape (15645, 128) (15645,)
 
-    imageSize, hiddenSize, outputSize = 128, 50, 26
+    imageSize, hiddenSize, outputSize = 128, 30, 26
     batchSize = 100
 
     # Create the model
     x = tf.placeholder(tf.float32, [None, imageSize])
     W1 = tf.Variable(tf.random_normal([imageSize, hiddenSize]))
     b1 = tf.Variable(tf.random_normal([hiddenSize]))
-    h1 = tf.nn.tanh(tf.matmul(x, W1) + b1)
+    h1 = tf.nn.sigmoid(tf.matmul(x, W1) + b1)
 
     W2 = tf.Variable(tf.random_normal([hiddenSize, outputSize]))
     b1 = tf.Variable(tf.random_normal([outputSize]))
@@ -46,7 +46,7 @@ def main(_):
     # Train
     tf.initialize_all_variables().run()
     try:
-        for step in range(20000):
+        for step in range(40000):
             randomIndex = np.random.random_integers(0, trainX.shape[0]-1, size=(batchSize, )) # mini batch size 100
             batch_xs, batch_ys = trainX[randomIndex], trainY[randomIndex]
             sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
@@ -55,8 +55,8 @@ def main(_):
             # Test trained model
                 correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
                 accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-                print("epoc: %3d\tstep: %8d\ttraining accuracy: %.6f" % (int(step * batchSize / trainX.shape[0]),
-                    step, sess.run(accuracy, feed_dict={x: testX, y_: testY})))
+                print("epoc: %3d\tstep: %8d\ttrain accuracy: %.6f\ttest accuracy: %.6f" % (int(step * batchSize / trainX.shape[0]),
+                    step, sess.run(accuracy, feed_dict={x: trainX, y_: trainY}), sess.run(accuracy, feed_dict={x: testX, y_: testY})))
     except:
         pass
 
@@ -68,6 +68,6 @@ if __name__ == '__main__':
 
 
 '''
-training accuracy: 0.861937
-testing accuracy: 0.787811
+epoc: 119	step:    35000	train accuracy: 0.864679	test accuracy: 0.813885
+sigmoid, 30 hidden
 '''

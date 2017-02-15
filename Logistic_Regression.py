@@ -15,8 +15,8 @@ parameters = {
     'solver': ['sag']
 }
 
-LR = LogisticRegression( n_jobs=-1, tol=1e-4, max_iter=200)
-clf = GridSearchCV(LR, parameters, cv=3, verbose=True, n_jobs=-1)
+LR = LogisticRegression( n_jobs=-1, tol=1e-4, max_iter=2000)
+clf = GridSearchCV(LR, parameters, cv=4, verbose=True, n_jobs=-1)
 clf.fit(trainX, trainY)
 
 print clf.score(trainX, trainY)
@@ -26,8 +26,8 @@ print clf.best_score_
 print clf.best_params_
 
 '''
-0.868191634008
-0.763461868038
-0.740062385028
-{'n_neighbors': 3, 'algorithm': 'auto'}
+0.781970865467
+0.755338718708
+0.75969151671
+{'penalty': 'l2', 'multi_class': 'ovr', 'C': 1, 'solver': 'sag'}
 '''

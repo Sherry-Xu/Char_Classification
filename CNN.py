@@ -9,7 +9,9 @@ trainY, testY = toFullIndices(trainY, 26), toFullIndices(testY, 26)
 
 batchSize = 200
 imageSize, outputSize, imageShape = 128, 26, [16, 8]
-convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 6, 16, 128, 84
+#convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 6, 16, 128, 84
+#convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 16, 32, 128, 256
+convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 16, 32, 256, 512    #0.983505 0.92897 88000
 
 
 sess = tf.InteractiveSession()
@@ -83,12 +85,14 @@ try:
     correct_prediction = tf.equal(tf.arg_max(y_conv, 1), tf.arg_max(y_, 1))
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     sess.run(tf.initialize_all_variables())
-    for step in xrange(80000):   #5000
+    for step in xrange(100000):   #5000
         randomIndex = np.random.random_integers(0, trainX.shape[0] - 1, size=(batchSize,))  # mini batch size 100
         batch_xs, batch_ys = trainX[randomIndex], trainY[randomIndex]
         if step % 100 == 0:
-            train_accurary = accuracy.eval(feed_dict={x: testX, y_: testY, keep_prob: 1.0})
+            train_accurary = accuracy.eval(feed_dict={x: trainX, y_: trainY, keep_prob: 1.0})
             print("epoc: %3d\tstep: %8d\ttraining accuracy: %.6f" %(int(step*batchSize/trainX.shape[0]), step, train_accurary))
+            if step % 1000 == 0:
+                print("test accuracy %.5f" % (accuracy.eval(feed_dict={x: testX, y_: testY, keep_prob: 1.0})))
         train_step.run(feed_dict={x: batch_xs, y_: batch_ys, keep_prob: 0.5})
 except:
     pass
@@ -100,10 +104,9 @@ print("test accuracy %.5f" %(accuracy.eval(feed_dict={x: testX, y_: testY, keep_
 
 
 '''
-train accuracy 0.91806
-test accuracy 0.89670
+epoc: 527	step:    88000	training accuracy: 0.983505
+test accuracy 0.92897
+epoc: 528	step:    88100	training accuracy: 0.984225
 
-batchSize = 200
-imageSize, outputSize, imageShape = 128, 26, [16, 8]
-convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 6, 16, 128, 84
+convSize1, convSize2, kernelNum1, kernelNum2, fcSize1, fcSize2 = 5, 3, 16, 32, 256, 512
 '''
