@@ -1,3 +1,6 @@
+#   author  :   Shawn
+#   data    :   2017.2.12
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from DataPreprocessing import *

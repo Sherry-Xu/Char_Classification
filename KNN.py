@@ -1,3 +1,6 @@
+#   author  :   Shawn
+#   data    :   2017.2.12
+
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
 from DataPreprocessing import *
